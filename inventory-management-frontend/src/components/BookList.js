@@ -1,6 +1,7 @@
 // src/components/BookList.js
 import React from 'react';
 
+// BookList component: displays the list of books and a delete button for each book
 function BookList({ books, onDelete }) {
   return (
     <div>
@@ -30,7 +31,7 @@ function BookList({ books, onDelete }) {
                 <td>{book.publicationDate}</td>
                 <td>{book.isbn}</td>
                 <td>
-                  <button onClick={() => onDelete(book.id)}>Delete</button>
+                  <button onClick={() => onDelete(book.id)}>Delete</button>  {/* Delete button */}
                 </td>
               </tr>
             ))}

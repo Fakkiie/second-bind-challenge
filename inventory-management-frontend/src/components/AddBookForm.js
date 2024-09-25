@@ -1,6 +1,7 @@
 // src/components/AddBookForm.js
 import React, { useState } from 'react';
 
+// AddBookForm component: a form for adding new books
 function AddBookForm({ onBookAdded }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -10,21 +11,22 @@ function AddBookForm({ onBookAdded }) {
     isbn: ''
   });
 
+  // Handles form input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate input data
     const { title, author, genre, publicationDate, isbn } = formData;
+
+    // Validate input data
     if (!title || !author || !genre || !publicationDate || !isbn) {
       alert('All fields are required.');
       return;
     }
-
-    // Optionally, add more validation here (e.g., ISBN format)
 
     try {
       const response = await fetch('/books', {
@@ -35,7 +37,7 @@ function AddBookForm({ onBookAdded }) {
 
       if (response.ok) {
         const newBook = await response.json();
-        onBookAdded(newBook);
+        onBookAdded(newBook);  // Calls the parent component function to update the list
         setFormData({
           title: '',
           author: '',
@@ -55,50 +57,11 @@ function AddBookForm({ onBookAdded }) {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Add New Book</h2>
-      <input
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Title"
-        required
-      />
-      <br />
-      <input
-        type="text"
-        name="author"
-        value={formData.author}
-        onChange={handleChange}
-        placeholder="Author"
-        required
-      />
-      <br />
-      <input
-        type="text"
-        name="genre"
-        value={formData.genre}
-        onChange={handleChange}
-        placeholder="Genre"
-        required
-      />
-      <br />
-      <input
-        type="date"
-        name="publicationDate"
-        value={formData.publicationDate}
-        onChange={handleChange}
-        required
-      />
-      <br />
-      <input
-        type="text"
-        name="isbn"
-        value={formData.isbn}
-        onChange={handleChange}
-        placeholder="ISBN"
-        required
-      />
-      <br />
+      <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" required />
+      <input type="text" name="author" value={formData.author} onChange={handleChange} placeholder="Author" required />
+      <input type="text" name="genre" value={formData.genre} onChange={handleChange} placeholder="Genre" required />
+      <input type="date" name="publicationDate" value={formData.publicationDate} onChange={handleChange} required />
+      <input type="text" name="isbn" value={formData.isbn} onChange={handleChange} placeholder="ISBN" required />
       <button type="submit">Add Book</button>
     </form>
   );
